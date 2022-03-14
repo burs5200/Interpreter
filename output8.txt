@@ -1,0 +1,40 @@
+def int max(int x,int y)
+	int z;
+	if (x>y)then 
+		z=x
+	else 
+		z=y
+	fi ;
+	return (z)
+fed ;
+int a,b,c,d;
+a=2;
+b=a*2-3;
+c=b/a+1;
+d=max(max(a,b),c);
+print (d).
+
+******NOTE: Variables appear in order they appear in hashtable. NOT order of appearance.
+================Symbol Tables================
+MAIN Symbol Table
+
+token                    |                   Values
+---------------------------------------------------
+<ID , 45>                |                        a
+<ID , 46>                |                        b
+<ID , 47>                |                        c
+<ID , 48>                |                        d
+<ID , 34>                |                      max
+<Integer , 1>            |                        1
+<Integer , 2>            |                        2
+<Integer , 3>            |                        3
+
+
+================Symbol Table================
+max Symbol Table
+
+token                    |                   Values
+---------------------------------------------------
+<ID , 41>                |                        x
+<ID , 43>                |                        y
+<ID , 44>                |                        z

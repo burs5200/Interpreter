@@ -1,0 +1,185 @@
+\documentclass[fleqn]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc} 
+\usepackage{lmodern}
+\begin{document}
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+ 
+       \textbf{CP471}
+ 
+       \vspace{0.5cm}
+        Assignment 2 
+ 
+       \vspace{1.5cm}
+ 
+       \textbf{Austin Bursey | 160165200}
+ 
+       \vfill
+        Due: Feb 14th 2020
+ 
+       \vspace{0.8cm}
+ 
+
+
+ 
+   \end{center}
+   
+    
+\end{titlepage}  
+   
+   
+\section{Grammar}
+
+$<$program$>$::= $<$fdecls$>$ $<$declarations$>$ $<statement\_ seq>$. \\ 
+$<$fdecls$>$ ::= $<$fdec$>$ ; $<$fdecls-rest$>$ \\
+$<$fdecls-rest$>$ ::= $<$fdec$>$ ;$<$fdecls-rest$>$ |$\epsilon$\\
+\\
+$<$fdec$>$ ::=def $<$type$>$ $<$fname$>$ ( $<$params$>$ ) $<$declarations$>$ $<statement\_ seq>$ fed\\
+$<$params$>$ ::= $<$type$>$ $<$var$>$ $<$params-rest$>$ \\
+$<$params-rest$>$ ::=  ,  $<$params$>$ | $\epsilon$ | \\
+$<$fname$>$::= $<$id$>$\\
+\\
+$<$declarations$>$::= $<$decl$>$; $<$declarations-rest$>$|\\
+$<$declarations-rest$>$::= $<$decl$>$; $<$declarations-rest$>$| $\epsilon$|\\
+\\
+$<$decl$>$::= $<$type$>$ $<$varlist$>$ \\ 
+$<$type$>$::= int | double \\
+$<$varlist$>$::= $<$var$>$ $<$varlist-rest$>$\\
+$<$varlist-rest$>$::= , $<$varlist$>$| $\epsilon$ \\
+\\
+$<statement\_ seq>$::= $<$statement$>$ $<statement\_ seq-rest>$ \\
+$<statement\_ seq-rest>$::=  ; $<statement\_ seq>$| $\epsilon$ |\\
+\\
+$<$statement$>$::= $<$var$>$ = $<$expr$>$ |\\ 
+if $<$bexpr$>$ then $<statement\_ seq>$ $<$statement-rest$>$fi |\\ 
+while $<$bexpr$>$ do $<statement\_ seq>$ od |\\ print $<$expr$>$|\\ return $<$expr$>$|  \\
+\\
+$<$statement-rest$>$::=  else $<statement\_ seq>$| $\epsilon$\\
+\\
+$<$expr$>$::= $<$term$>$ $<$expr-rest$>$\\
+$<$expr-rest$>$::=  + $<$term$>$ $<$expr-rest$>$ |  - $<$term$>$ $<$expr-rest$>$| $\epsilon$\\
+\\
+$<$term$>$::=  $<$factor$>$ $<$term-rest$>$\\
+$<$term-rest$>$::= *$<$factor$>$ $<$term-rest$>$|/$<$factor$>$ $<$term-rest$>$|$\%<$factor$>$ $<$term-rest$>$|$\epsilon$\\
+$<$factor$>$::= $<$var$>$| $<$number$>$| ($<$expr$>$)|$<$fname$>$ ($<$exprseq$>$)\\
+\\
+$<$exprseq$>$::= $<$expr$>$ $<$exprseq-rest$>$\\
+$<$exprseq-rest$>$::= , $<$exprseq$>$ | $\epsilon$ | \\
+\\
+$<$bexpr$>$::= $<$bterm$>$ $<$bexpr-rest$>$\\
+$<$bexpr-rest$>$::=  or $<$bterm$>$ $<$bexpr-rest$>$| $\epsilon$\\
+\\
+$<$bterm$>$::= $<$bfactor$>$ $<$bterm-rest$>$ \\
+$<$bterm-rest$>$::=  and $<$bfactor$>$ $<$bterm$>$ | $\epsilon$\\
+\\
+$<$bfactor$>$::= ($<$bfactor-rest $>$)| not $<$bfactor$>$ | \\
+$<$bfactor-rest $>$::= $<$bexpr$>$| $<$expr$>$ $<$comp$>$ $<$expr$>$\\
+\\
+$<$comp$>$::= $<$ | $>$ | == | $<$= | $>$= |$<$ $>$\\
+\\
+$<$var$>$::= $<$id$>$ $<$var-rest$>$\\
+$<$var-rest$>$::= [$<$expr$>$]| $\epsilon$\\
+\\
+$<$letter$>$::= a | b | c | ... | z \\
+$<$digit$>$::= 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0\\
+$<$id$>$::= $<$letter$>$ $<$id-rest$>$\\
+$<$id-rest$>$::= $<$letter$>$ $<$id-rest$>$|  $<$digit$>$ $<$id-rest$>$ | $\epsilon$\\
+\\
+$<$number$>$::= $<$integer$>$ | $<$double$>$ \\
+\\
+$<$integer$>$::= $<$digit$>$ $<$int shortcut$>$\\
+$<$int shortcut$>$::= e$<$e-rest-int$>$ $<$lead-off$>$|$<$digit$>$ $<$int shortcut$>$|. $<$lead-off$>$ $<$int shortcut$>$ |$\epsilon$\\
+\\
+$<$double$>$::= $<$digit$>$ $<$double shortcut$>$\\
+$<$double shortcut$>$::=. $<$lead-off$>$ $<$double shortcut$>$| $<$digit$>$ $<$double shortcut$>$ | e-$<$lead-off$>$| $<$lead-off$>$| $\epsilon$\\
+\\
+$<$lead-off$>$:= $<$digit$>$ $<$lead-off-rest$>$\\ 
+$<$lead-off-rest$>$:=  $<$lead-off$>$| $\epsilon$\\ 
+\\
+$<$e-rest-int$>$:= +|$\epsilon$\\
+
+\section{First}
+first($<$program$>$) = first($<$fdecs$>$)= first($<$fdec$>$) = \{def\}\\
+\\
+first($<$fdecs-rest$>$) = \{def , $\epsilon$\}\\
+\\
+first($<$params$>$) = first($<$type$>$) = first($<$declarations$>$) = first($<$decl$>$) = \{ int , double\} \\
+\\
+first($<$params-rest$>$) = \{',',$\epsilon$\}\\
+\\
+first($<$fname$>$) = first($<$id$>$) = first($<$letter$>$) = first($<$varlist$>$) = first($<$var$>$)=  \{ a , b , c , ... , z\} \\
+\\
+first($<$declarations-rest$>$) = \{ int , double, $\epsilon$\}\\ 
+\\
+first($<$comp$>$) = \{$<$, $>$, ==, $<$=, $>$=,$<$ $>$ \}\\
+\\
+first($<$varlist-rest$>$) = \{',' , $\epsilon$\} \\ 
+\\
+first($<statement\_ seq>$) = first($<$statement$>$) = \{if, while, print, return, a , b , c , ... , z \}\\
+\\
+first($<statement\_ seq-rest>$) = \{; , $\epsilon$\}\\
+\\
+first($<$statement-rest$>$)= \{else , $\epsilon$ \}\\
+\\
+first($<$exprseq$>$)= first($<$expr$>$) = first($<$term$>$) = first($<$factor$>$)=\{ (,1,2,3,4,5,6,7,8,9,0\}\\
+\\
+first($<$expr-rest$>$) = \{+, -,  $\epsilon$\}\\
+\\
+first($<$term-rest$>$) = \{*, /, $\%$, $\epsilon$\}\\
+\\
+first($<$exprseq-rest$>$)= \{',', $\epsilon$\}\\
+\\
+first($<$bexpr$>$) = first($<$bterm$>$)= first($<$bfactor$>$) = \{(,not \}\\
+\\
+first($<$bexpr-rest$>$)= \{or,$\epsilon$ \}\\
+\\
+first($<$bterm-rest$>$)= \{and,$\epsilon$ \}\\
+\\
+first($<$bfactor-rest $>$)= \{(,not,a , b , c , ... , z ,1,2,3,4,5,6,7,8,9,0\}\\
+\\
+first($<$var-rest$>$)= \{[ ,$\epsilon$ \}\\
+\\
+first($<$digit$>$)= first($<$number$>$) =first($<$integer$>$)=first($<$double$>$)=first($<$lead-off$>$)=  \{1,2,3,4,5,6,7,8,9,0\}\\
+\\
+first($<$id-rest$>$)= \{a , b , c , ... , z ,1,2,3,4,5,6,7,8,9,0,$\epsilon$ \}\\
+\\
+first($<$int shortcut$>$)= \{e,1,2,3,4,5,6,7,8,9,0, . , $\epsilon$ \}\\
+\\
+first($<$double shortcut$>$)= \{.,1,2,3,4,5,6,7,8,9,0,e- , $\epsilon$\}\\
+\\
+first($<$lead-off-rest$>$)= \{1,2,3,4,5,6,7,8,9,0,$\epsilon$\}\\
+\\
+first($<$e-rest-int$>$)= \{+,$\epsilon$\}\\
+\section{Follow}
+follow(<>)\\
+\\
+follow(<program>)= \{.\}\\
+\\
+follow(<fdecls>)= follow(<fdecls-rest>)= \{ int , double\}\\
+\\
+follow(<declarations>)= \{if, while, print, return, a , b , c , ... , z \}\\
+\\
+follow(<fdec>) =   \{;\}\\
+\\
+follow(<statement\_seq>)=follow(statement\_seq-rest) =  \{ .  , fed , fi ,od,else \}\\
+\\
+follow(<type>)= \{ a , b , c , ... , z\} \\ \\
+\\
+follow(<fname>)= \{ (\}\\
+\\
+follow(<params>)= follow(<params-rest>) = \{ ) \} \\
+\\
+follow(<var>) = \{"," ,  ) , ; \}\\
+\\
+follow(<varlist>) = follow(<varlist-rest>)= follow(<decl>) = \{; \} \\
+\\
+follow(<id>)= \{( , [ , "," , ) , ; \}\\
+\\
+\\
+\\
+\end{document}
